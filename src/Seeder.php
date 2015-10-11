@@ -17,7 +17,7 @@ class Seeder
      */
     private $tables=[];
     private $filledTablesNames=[];
-    private $generatorConfigurator;
+    protected $generatorConfigurator;
     protected $generator;
     protected $dbHelper;
 

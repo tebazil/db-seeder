@@ -1,4 +1,4 @@
-# Db Seeder
+# PHP Db Seeder
 Have your database populated with fake data in no time! 
 
 * Very easy to use!
