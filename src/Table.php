@@ -12,7 +12,9 @@ class Table {
     private $rawData;
     private $rows;
     private $isFilled=false;
+    private $isPartiallyFilled=false;
     private $dependsOn=[];
+    private $selfDependentColumns=[];
     private $columnConfig=[];
     private $rowQuantity;
 
@@ -38,6 +40,7 @@ class Table {
         //column config
         $this->columnConfig = $columns;
         $this->calcDependsOn();
+        $this->calcSelfDependentColumns();
         return $this;
     }
 
@@ -77,11 +80,23 @@ class Table {
 
     public function fill($writeDatabase = true) {
         is_null($this->rawData) ? $this->fillFromGenerators($this->columnConfig): $this->fillFromRawData($this->columnConfig, $this->rawData);
-        if($writeDatabase) {
+
+        if($this->selfDependentColumns) {
+            if($this->isPartiallyFilled) {
+                $this->isFilled = true; //second run
+            }
+            else {
+                $this->isPartiallyFilled = true; //first run
+            }
+        }
+        else {
+            $this->isFilled = true; //no self-dependent columns
+        }
+
+        if($this->isFilled && $writeDatabase) {
             $this->truncate();
             $this->insertData();
         }
-        $this->isFilled = true;
     }
 
     public function getIsFilled() {
@@ -104,8 +119,6 @@ class Table {
                 $rowData = array_values($data[$dataKey]);
                 for ($i = 0; $i < $sizeofColumns; $i++) {
                     if(!$columnConfig[$i]) { //skipped column
-                        //todo: test this
-                        //todo: also test if all columns are skipped ?
                         continue;
                     }
                     $this->rows[$rowNo][$columnConfig[$i]] = $rowData[$i];
@@ -119,6 +132,20 @@ class Table {
         $this->generator->reset();
         for($rowNo=0; $rowNo<$this->rowQuantity;$rowNo++) {
             foreach ($columnConfig as $column => $config) {
+                //first and second run separation
+                if($this->selfDependentColumns) {
+                    $columnIsSelfDependent = in_array($column, $this->selfDependentColumns);
+                    if(!$this->isPartiallyFilled) {
+                        if($columnIsSelfDependent) {
+                            continue;
+                        }
+                    }
+                    else {
+                        if(!$columnIsSelfDependent) {
+                            continue;
+                        }
+                    }
+                }
                 $value = $this->generator->getValue($config);
                 $this->rows[$rowNo][$column] = $value;
                 $this->columns[$column][$rowNo] = $value;
@@ -139,6 +166,21 @@ class Table {
                 }
             }
             sort($this->dependsOn);
+        }
+    }
+
+    private function calcSelfDependentColumns() {
+        if($this->rawData) {
+            return false;
+        }
+        else {
+            foreach ($this->columnConfig as $name => $config) {
+                if (!is_callable($config)) {
+                    if (is_array($config) && ($config[0] === Generator::RELATION) && ($config[1]===$this->name)) {
+                            $this->selfDependentColumns[]=$name;
+                    }
+                }
+            }
         }
     }
 

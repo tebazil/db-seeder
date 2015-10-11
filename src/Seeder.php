@@ -42,7 +42,6 @@ class Seeder
         $foolProofCounter=0;
         $tableNamesIntersection=[];
         while($tableNamesIntersection!==$tableNames) {
-            //todo - replace with == ?
             if($foolProofCounter++>500) {
                 throw new \Exception("Something unexpected happened: some tables possibly cannot be filled");
             }
@@ -50,7 +49,9 @@ class Seeder
                 if(!$table->getIsFilled() && $table->canBeFilled($this->filledTablesNames)) {
                     $table->fill();
                     $this->generator->setColumns($tableName, $table->getColumns());
-                    $this->filledTablesNames[]=$tableName;
+                    if(!in_array($tableName, $this->filledTablesNames)) { // because some tables are filled twice
+                        $this->filledTablesNames[]=$tableName;
+                    }
                 }
             }
             $tableNamesIntersection = array_intersect($this->filledTablesNames, $tableNames);

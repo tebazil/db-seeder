@@ -71,6 +71,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
         $pdo->exec("
         CREATE TABLE user(
    id INT PRIMARY KEY     NOT NULL,
+   parent_id           INT    NULL,
    profile_id           INT    NULL,
    username        TEXT     NULL,
    password_hash        TEXT     NULL
@@ -100,6 +101,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
         $seeder->table('article')->columns($articleColumns)->rowQuantity(40);
         $userColumns = [
             'id',
+            'parent_id'=>$generator->relation('user','id'),
             'profile_id',
             'username' => $faker->userName,
             'password_hash' => $faker->md5,
