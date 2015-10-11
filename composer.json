@@ -7,6 +7,7 @@
       "email": "vasiliy.baukin@gmail.com"
     }
   ],
+  "license": "BSD-3-Clause",
   "support": {
     "issues": "https://github.com/tebazil/db-seeder/issues?state=open",
     "source": "https://github.com/tebazil/db-seeder"
