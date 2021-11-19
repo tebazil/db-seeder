@@ -174,9 +174,11 @@ class FakerConfigurator
 {
     const OPTIONAL = 'optional';
     const UNIQUE = 'unique';
+    const VALID = 'valid';
     private $optionsDefault = [
         self::OPTIONAL => false,
         self::UNIQUE => false,
+        self::VALID => false,
     ];
     private $options;
 
@@ -206,6 +208,12 @@ class FakerConfigurator
     public function unique($reset = false, $maxRetries = 10000)
     {
         $this->options[self::UNIQUE]=func_get_args();
+        return $this;
+    }
+
+    public function valid($validator, $maxRetries = 10000)
+    {
+        $this->options[self::VALID]=func_get_args();
         return $this;
     }
 

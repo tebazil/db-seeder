@@ -29,6 +29,7 @@ class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([Generator::FAKER, $property, null, [
             'optional'=>false,
             'unique'=>false,
+            'valid' => false
         ]], $this->faker->$property);
     }
 
@@ -40,6 +41,7 @@ class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([Generator::FAKER, $method, [$methodParam1, $methodParam2], [
             'optional'=>false,
             'unique'=>false,
+            'valid' => false
         ]], $this->faker->$method($methodParam1, $methodParam2));
     }
 
@@ -50,10 +52,12 @@ class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([Generator::FAKER, $method, [], [
             'optional'=>[],
             'unique'=>false,
+            'valid' => false
         ]], $this->faker->optional()->$method());
         $this->assertEquals([Generator::FAKER, $method, [], [
             'optional'=>[$methodParam1, $methodParam2],
             'unique'=>false,
+            'valid' => false
         ]], $this->faker->optional($methodParam1, $methodParam2)->$method());
     }
 
@@ -65,10 +69,12 @@ class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([Generator::FAKER, $method, [], [
             'optional'=>false,
             'unique'=>[],
+            'valid' => false
         ]], $this->faker->unique()->$method());
         $this->assertEquals([Generator::FAKER, $method, [], [
             'optional'=>false,
             'unique'=>[$methodParam1, $methodParam2],
+            'valid' => false
         ]], $this->faker->unique($methodParam1, $methodParam2)->$method());
     }
 
@@ -79,10 +85,12 @@ class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
         $this->assertEquals([Generator::FAKER, $method, [], [
             'optional'=>[],
             'unique'=>[$methodParam1, $methodParam2],
+            'valid' => false
         ]], $this->faker->unique($methodParam1, $methodParam2)->optional()->$method());
         $this->assertEquals([Generator::FAKER, $method, [], [
             'optional'=>false,
             'unique'=>false,
+            'valid' => false
         ]], $this->faker->$method());
     }
 

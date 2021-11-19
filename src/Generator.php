@@ -45,6 +45,9 @@ class Generator
                     if(isset($config[3][FakerConfigurator::OPTIONAL]) && is_array($config[3][FakerConfigurator::OPTIONAL])) {
                         $faker = call_user_func_array([$faker, 'optional'], $config[3][FakerConfigurator::OPTIONAL]);
                     }
+                    if(isset($config[3][FakerConfigurator::VALID]) && is_array($config[3][FakerConfigurator::VALID])) {
+                        $faker = call_user_func_array([$faker, 'valid'], $config[3][FakerConfigurator::VALID]);
+                    }
                 }
                 if (isset($config[2])) {
                     $value = $faker->format($config[1], $config[2]);
