@@ -1,13 +1,10 @@
 <?php
-use tebazil\dbseeder\Generator;
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 10.09.15
- * Time: 22:49
- */
-class GeneratorTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+use tebazil\dbseeder\Generator;
+use tebazil\dbseeder\Seeder;
+
+class GeneratorTest extends TestCase
 {
     /**
      * @var Generator
@@ -20,7 +17,7 @@ class GeneratorTest extends PHPUnit_Framework_TestCase
     public function getGenerator()
     {
         if(is_null($this->generator)) {
-            $this->generator = new Generator(new \tebazil\dbseeder\Seeder(new Pdo('mysql:localhost','root','test'))); //yeah, I know we can benefit from some decoupling here
+            $this->generator = new Generator(new Seeder(new Pdo("mysql:host=" . $_ENV["MYSQL_HOST"],$_ENV["MYSQL_USER"],$_ENV["MYSQL_PASSWORD"]))); //yeah, I know we can benefit from some decoupling here
         }
         return $this->generator;
     }

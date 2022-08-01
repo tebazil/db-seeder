@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 17.09.15
- * Time: 17:05
- */
-class TableConfiguratorTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class TableConfiguratorTest extends TestCase
 {
     const TABLE_NAME = 'table';
     //todo: do we need this?

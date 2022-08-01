@@ -1,11 +1,5 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 17.09.15
- * Time: 17:44
- */
 class Helper
 {
     public static function runPrivateMethod(&$object, $methodName, $args=[]) {
