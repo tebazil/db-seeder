@@ -33,7 +33,7 @@ to the `require` section of your `composer.json` file.
 You can quickly seed your database with generated data with something like this:
 
 ```php
-$pdo = new PDO('mysql:localhost', 'root', 'test');
+$pdo = new PDO('mysql:localhost', 'root', 'test'); // or new Pdo("mysql:host=" . $_ENV["MYSQL_HOST"],$_ENV["MYSQL_USER"],$_ENV["MYSQL_PASSWORD"])
 $seeder = new \tebazil\dbseeder\Seeder($pdo);
 $generator = $seeder->getGeneratorConfigurator();
 $faker = $generator->getFakerConfigurator();

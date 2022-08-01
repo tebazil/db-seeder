@@ -1,18 +1,14 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 19.09.15
- * Time: 22:34
- */
-class SeederTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class SeederTest extends TestCase
 {
     /** @var \tebazil\dbseeder\Seeder */
     private $seeder;
     private $_pdo;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->seeder = new \tebazil\dbseeder\Seeder($this->getPdo());
     }
@@ -33,7 +29,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
 
     public function testCheckCrossDependentTablesPresent()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->seeder->table('book')->columns([
             'article_id'
         ]);
@@ -51,7 +47,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
         $this->seeder->table('article')->columns([
             'id'
         ]);
-        Helper::runPrivateMethod($this->seeder, 'checkCrossDependentTables');
+        $this->assertNull(Helper::runPrivateMethod($this->seeder, 'checkCrossDependentTables'));
     }
 
 

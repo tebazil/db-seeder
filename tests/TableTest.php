@@ -1,13 +1,9 @@
 <?php
+
+use PHPUnit\Framework\TestCase;
 use tebazil\dbseeder\Generator;
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 17.09.15
- * Time: 18:11
- */
-class TableTest extends PHPUnit_Framework_TestCase
+class TableTest extends TestCase
 {
     const TABLE_NAME = 'table_name';
     private $testColumnConfig = [
@@ -58,7 +54,7 @@ class TableTest extends PHPUnit_Framework_TestCase
         return $ret;
     }
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->table = new \tebazil\dbseeder\Table(self::TABLE_NAME, new Generator(), new \tebazil\dbseeder\DbHelper(new PDO('sqlite::memory:')));
 
@@ -80,7 +76,7 @@ class TableTest extends PHPUnit_Framework_TestCase
 
     public function testRowQuantityNonNumeric()
     {
-        $this->setExpectedException('Exception');
+        $this->expectException(Exception::class);
         $this->table->setRowQuantity('asdfas');
     }
 
@@ -93,20 +89,20 @@ class TableTest extends PHPUnit_Framework_TestCase
 
     public function testDataEmptyArray()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->table->setRawData([]);
     }
 
     public function testDataInvalidArray()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->table->setRawData($this->rawDataInvalid);
 
     }
 
     public function testDataWithoutKeysWithoutColumnNames()
     {
-        $this->setExpectedException('InvalidArgumentException');
+        $this->expectException(InvalidArgumentException::class);
         $this->table->setRawData($this->rawDataWithoutKeys);
     }
 

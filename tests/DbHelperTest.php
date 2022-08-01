@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 10.09.15
- * Time: 22:14
- */
-class DbHelperTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class DbHelperTest extends TestCase
 {
     private $pdo;
     private $dbHelper;

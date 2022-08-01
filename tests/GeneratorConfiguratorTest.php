@@ -1,12 +1,8 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 17.09.15
- * Time: 16:58
- */
-class GeneratorConfiguratorTest extends PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class GeneratorConfiguratorTest extends TestCase
 {
     private $configurator;
     public function __construct($name = null, array $data = array(), $dataName = '')

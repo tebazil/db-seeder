@@ -1,13 +1,9 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: tebazil
- * Date: 10.09.15
- * Time: 0:09
- */
+use PHPUnit\Framework\TestCase;
 use \tebazil\dbseeder\Generator;
-class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
+
+class FakerConfiguratorTest extends TestCase
 {
     /**
      * @var \tebazil\dbseeder\FakerConfigurator
@@ -17,7 +13,7 @@ class FakerConfiguratorTest extends PHPUnit_Framework_TestCase
      * Sets up the fixture, for example, open a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->faker = new \tebazil\dbseeder\FakerConfigurator();
     }
